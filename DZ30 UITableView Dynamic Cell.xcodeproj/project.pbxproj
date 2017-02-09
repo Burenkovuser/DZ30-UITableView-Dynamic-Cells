@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB4F04371E4CBF030086F629 /* SubClass.m in Sources */ = {isa = PBXBuildFile; fileRef = FB4F04361E4CBF030086F629 /* SubClass.m */; };
 		FB5797C91E4C6CE200DD543D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FB5797C81E4C6CE200DD543D /* main.m */; };
 		FB5797CC1E4C6CE200DD543D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FB5797CB1E4C6CE200DD543D /* AppDelegate.m */; };
 		FB5797CF1E4C6CE200DD543D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB5797CE1E4C6CE200DD543D /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB4F04351E4CBF030086F629 /* SubClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubClass.h; sourceTree = "<group>"; };
+		FB4F04361E4CBF030086F629 /* SubClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubClass.m; sourceTree = "<group>"; };
 		FB5797C41E4C6CE200DD543D /* DZ30 UITableView Dynamic Cell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DZ30 UITableView Dynamic Cell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB5797C81E4C6CE200DD543D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FB5797CA1E4C6CE200DD543D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				FB5797CD1E4C6CE200DD543D /* ViewController.h */,
 				FB5797CE1E4C6CE200DD543D /* ViewController.m */,
 				FB5797D01E4C6CE300DD543D /* Main.storyboard */,
+				FB4F04351E4CBF030086F629 /* SubClass.h */,
+				FB4F04361E4CBF030086F629 /* SubClass.m */,
 				FB5797D31E4C6CE300DD543D /* Assets.xcassets */,
 				FB5797D51E4C6CE300DD543D /* LaunchScreen.storyboard */,
 				FB5797D81E4C6CE400DD543D /* Info.plist */,
@@ -151,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB5797CF1E4C6CE200DD543D /* ViewController.m in Sources */,
+				FB4F04371E4CBF030086F629 /* SubClass.m in Sources */,
 				FB5797CC1E4C6CE200DD543D /* AppDelegate.m in Sources */,
 				FB5797C91E4C6CE200DD543D /* main.m in Sources */,
 			);
@@ -309,6 +315,7 @@
 				FB5797DD1E4C6CE400DD543D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
