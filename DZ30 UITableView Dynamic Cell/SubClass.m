@@ -15,6 +15,7 @@
     if (self) {
         self.color = [UIColor clearColor];
         self.name = @"name";
+        self.surname = @"surname";
     }
     return self;
 }

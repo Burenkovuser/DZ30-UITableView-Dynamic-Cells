@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) UIColor *color;//импортируем UIKit чтобы заработало
 @property (strong, nonatomic) NSString* name;
+@property (strong, nonatomic) NSString* surname;
 
 
 @end
