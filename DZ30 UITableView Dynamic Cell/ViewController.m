@@ -22,6 +22,14 @@
 
 @property(strong, nonatomic) NSArray* sortedStudent;
 
+//для супремена
+
+@property(strong, nonatomic) NSMutableArray* perfectStudent;
+@property(strong, nonatomic) NSMutableArray* goodStudent;
+@property(strong, nonatomic) NSMutableArray* normalStudent;
+@property(strong, nonatomic) NSMutableArray* badStudent;
+
+
 
 @end
 
@@ -35,6 +43,12 @@
     
     self.arrayOfStudents = [NSMutableArray array];
     self.arrayOfAverageMarks = [NSMutableArray array];
+    
+    self.perfectStudent = [NSMutableArray array];
+    self.goodStudent = [NSMutableArray array];
+    self.normalStudent = [NSMutableArray array];
+    self.badStudent = [NSMutableArray array];
+    
     
     self.arrayOfStudentNames = [NSArray arrayWithObjects:@"Ivan", @"Olga", @"Igor", @"Max", @"Sveta", @"Mila", @"Anna", @"Vika", @"Petr", @"Alex", @"Vasilii", @"Roman", @"Masha", @"Donald", @"Den", @"Fedor", @"Alla", @"Elena", @"Nicolay", @"Semen", nil];
     self.arrayOfStudentSurnames = [NSArray arrayWithObjects:@"Ivanov", @"Black", @"Petrov", @"White", @"Price",@"Green", @"Pinck", @"Apple", @"Yellow", @"Red", @"Grey", @"Silver", @"Gold", @"Orange", @"Tree", @"Free", @"Wood", @"Forest", @"Ligth", @"Sun", nil];
@@ -52,7 +66,17 @@
         
         CGFloat averageMark = (float) (arc4random_uniform(41) + 10) / 10;// оценки от 1 до 5 с дробной частью
         
-        [self.arrayOfAverageMarks addObject:[NSNumber numberWithFloat:averageMark]];
+        if (averageMark >= 4.5f) {
+            [self.perfectStudent addObject:[NSNumber numberWithFloat:averageMark]];
+        } else if (averageMark < 4.5f && averageMark >= 4.f) {
+            [self.goodStudent addObject:[NSNumber numberWithFloat:averageMark]];
+        } else if (averageMark < 4.f && averageMark >= 3.f) {
+            [self.normalStudent addObject:[NSNumber numberWithFloat:averageMark]];
+        } else {
+            [self.badStudent addObject:[NSNumber numberWithFloat:averageMark]];
+        }
+        
+        //[self.arrayOfAverageMarks addObject:[NSNumber numberWithFloat:averageMark]];//убираем в супермене
     }
     
     self.sortedStudent = [NSArray array];
@@ -112,26 +136,119 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView { // количество секций
     
-    return 1;
+    return 4;//по числу групп студентов
 }
 
 - (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{//метод заголовка
     //return [NSString stringWithFormat:@"RGB random color"];
-    return [NSString stringWithFormat:@"Students and average mark"];
+    //return [NSString stringWithFormat:@"Students and average mark"];
+    
+    NSString* result;
+    switch (section) {//завание свича section как и в методе
+        case 0:
+            return result = [NSString stringWithFormat:@"Perfect students"];
+            break;
+        case 1:
+            return result = [NSString stringWithFormat:@"Good students"];
+            break;
+        case 2:
+            return result = [NSString stringWithFormat:@"Normal students"];
+            break;
+        case 3:
+            return result = [NSString stringWithFormat:@"Bad students"];
+            break;
+            
+        default:
+            break;
+    }
+    return result;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {// количество ячеек
     
-    return 20;
+    int rowsCont = 0;
+    switch (section) {
+        case 0:
+            rowsCont = (int)[self.perfectStudent count];
+            break;
+            
+        case 1:
+            rowsCont = (int)[self.goodStudent count];
+            break;
+            
+        case 2:
+            rowsCont = (int)[self.normalStudent count];
+            break;
+            
+        case 3:
+            rowsCont = (int)[self.badStudent count];
+            break;
+            
+        default:
+            break;
+    }
+    return rowsCont;
+    //return 20;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {//вернуть ячейку для каждой секции и каждого ряда
     static NSString *identifier=@"CellClassic";
     UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:identifier];// Метод возвращает ссылку на ячейку UITableViewCell по индетификатуру, если ячейка создана и можно её использовать повторно
     if (!cell) {//если ячейки не существует
-        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];//UITableViewCellStyleValue1, левый ярлык выровнен по левому и правому краю этикетки на право с синим текстом (используется в настройках)
     }
     
+    switch (indexPath.section) {
+        case 0:
+            if (self.perfectStudent) {
+                NSLog(@"Case 0");
+                cell.textLabel.text = [NSString stringWithFormat:@"%@", [self.sortedStudent objectAtIndex:indexPath.row]];//имя и фамилию
+                CGFloat studentMark =[[self.perfectStudent objectAtIndex:indexPath.row] floatValue];//оценка
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f", studentMark];
+                cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor greenColor];
+            } else {
+                NSLog(@"Not perfect student");
+            }
+            break;
+        case 1:
+            if (self.goodStudent) {
+                NSLog(@"Case 1");
+                cell.textLabel.text = [self.sortedStudent objectAtIndex:indexPath.row + [self.perfectStudent count]];//добавляем из предыдущей строки отличников
+                CGFloat studentMark =[[self.perfectStudent objectAtIndex:indexPath.row] floatValue];//оценка
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f", studentMark];
+                cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor blueColor];
+            } else {
+                NSLog(@"Not good student");
+            }
+            break;
+        case 2:
+            if (self.normalStudent) {
+                NSLog(@"Case 2");
+                cell.textLabel.text = [self.sortedStudent objectAtIndex:indexPath.row + [self.goodStudent count] + [self.perfectStudent count]];//добавляем из предыдущей строки отличников хорошистов
+                CGFloat studentMark =[[self.perfectStudent objectAtIndex:indexPath.row] floatValue];//оценка
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f", studentMark];
+                cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor blackColor];
+            } else {
+                NSLog(@"Not normal student");
+            }
+            break;
+        case 3:
+            if (self.badStudent) {
+                NSLog(@"Case 3");
+                cell.textLabel.text = [self.sortedStudent objectAtIndex:indexPath.row + [self.normalStudent count] + [self.goodStudent count] + [self.perfectStudent count]];//добавляем из предыдущей строки отличников хорошистов
+                CGFloat studentMark =[[self.perfectStudent objectAtIndex:indexPath.row] floatValue];//оценка
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.2f", studentMark];
+                cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor redColor];
+
+            } else {
+                NSLog(@"Not bad student");
+            }
+            break;
+            
+        default:
+            break;
+    }
+    /*
     CGFloat studentMark = [[self.arrayOfAverageMarks objectAtIndex:indexPath.row]floatValue];
     //cell.textLabel.text = [self.arrayOfNames objectAtIndex:indexPath.row];
     static CGFloat borderMark = 3.0f;
@@ -139,7 +256,7 @@
     if (studentMark < borderMark) {
         cell.textLabel.text = [self.sortedStudent objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.1f", studentMark];
-        cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor redColor];
+        cell.detailTextLabel.textColor = cell.textLabel.textColor = [UIColor redColor];//оба окрашиваем в один цвет
     } else {
         cell.textLabel.text = [self.sortedStudent objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%1.1f", studentMark];
@@ -150,6 +267,7 @@
     //cell.backgroundColor = [self randomColorWhithRed:red green:green blue:blue];
    
    // NSLog(@"IndexPath.row - %d", indexPath.row);
+     */
     return cell;
     
 }
